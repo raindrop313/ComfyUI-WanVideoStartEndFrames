@@ -18,6 +18,8 @@ End Frame:
 prompt:
 两个角色搀扶着往前走，并看向彼此
 
+Frame count:81+1=82
+
 Video output:
 
 -720P:
