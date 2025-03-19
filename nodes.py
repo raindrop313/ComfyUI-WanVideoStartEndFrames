@@ -35,7 +35,7 @@ def add_noise_to_reference_video(image, ratio=None):
     image = image + image_noise
     return image
 
-class WanVideoBlockSwap:
+class WanVideoBlockSwap_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -54,7 +54,7 @@ class WanVideoBlockSwap:
     def setargs(self, **kwargs):
         return (kwargs, )
 
-class WanVideoVRAMManagement:
+class WanVideoVRAMManagement_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -71,7 +71,7 @@ class WanVideoVRAMManagement:
     def setargs(self, **kwargs):
         return (kwargs, )
 
-class WanVideoTeaCache:
+class WanVideoTeaCache_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -127,7 +127,7 @@ Official recommended values https://github.com/ali-vilab/TeaCache/tree/main/TeaC
         return (teacache_args,)
 
 
-class WanVideoModel(comfy.model_base.BaseModel):
+class WanVideoModel_2frames(comfy.model_base.BaseModel):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.pipeline = {}
@@ -146,7 +146,7 @@ except: #for backwards compatibility
     from comfy.latent_formats import HunyuanVideo
     latent_format = HunyuanVideo
 
-class WanVideoModelConfig:
+class WanVideoModelConfig_2frames:
     def __init__(self, dtype):
         self.unet_config = {}
         self.unet_extra_config = {}
@@ -204,7 +204,7 @@ def standardize_lora_key_format(lora_sd):
         new_sd[k] = v
     return new_sd
 
-class WanVideoEnhanceAVideo:
+class WanVideoEnhanceAVideo_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -223,7 +223,7 @@ class WanVideoEnhanceAVideo:
     def setargs(self, **kwargs):
         return (kwargs, )
 
-class WanVideoLoraSelect:
+class WanVideoLoraSelect_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -259,7 +259,7 @@ class WanVideoLoraSelect:
         loras_list.append(lora)
         return (loras_list,)
 
-class WanVideoLoraBlockEdit:
+class WanVideoLoraBlockEdit_2frames:
     def __init__(self):
         self.loaded_lora = None
 
@@ -286,7 +286,7 @@ class WanVideoLoraBlockEdit:
         return (selected_blocks,)
 
 #region Model loading
-class WanVideoModelLoader:
+class WanVideoModelLoader_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -407,8 +407,8 @@ class WanVideoModelLoader:
             transformer = WanModel(**TRANSFORMER_CONFIG)
         transformer.eval()
 
-        comfy_model = WanVideoModel(
-            WanVideoModelConfig(base_dtype),
+        comfy_model = WanVideoModel_2frames(
+            WanVideoModelConfig_2frames(base_dtype),
             model_type=comfy.model_base.ModelType.FLOW,
             device=device,
         )
@@ -586,7 +586,7 @@ class WanVideoModelLoader:
 
 #region load VAE
 
-class WanVideoVAELoader:
+class WanVideoVAELoader_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -607,7 +607,7 @@ class WanVideoVAELoader:
     DESCRIPTION = "Loads Hunyuan VAE model from 'ComfyUI/models/vae'"
 
     def loadmodel(self, model_name, precision):
-        from .wanvideo.wan_video_vae import WanVideoVAE
+        from .wanvideo.wan_video_vae_2frames import WanVideoVAE
 
         device = mm.get_torch_device()
         offload_device = mm.unet_offload_device()
@@ -632,7 +632,7 @@ class WanVideoVAELoader:
 
 
 
-class WanVideoTorchCompileSettings:
+class WanVideoTorchCompileSettings_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -667,7 +667,7 @@ class WanVideoTorchCompileSettings:
 
 #region TextEncode
 
-class LoadWanVideoT5TextEncoder:
+class LoadWanVideoT5TextEncoder_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -718,7 +718,7 @@ class LoadWanVideoT5TextEncoder:
         
         return (text_encoder,)
     
-class LoadWanVideoClipTextEncoder:
+class LoadWanVideoClipTextEncoder_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -757,7 +757,7 @@ class LoadWanVideoClipTextEncoder:
         return (clip_model,)
     
 
-class WanVideoTextEncode:
+class WanVideoTextEncode_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
@@ -806,7 +806,7 @@ class WanVideoTextEncode:
             }
         return (prompt_embeds_dict,)
     
-class WanVideoTextEmbedBridge:
+class WanVideoTextEmbedBridge_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
@@ -830,7 +830,7 @@ class WanVideoTextEmbedBridge:
         return (prompt_embeds_dict,)
     
 #region clip image encode
-class WanVideoImageClipEncode:
+class WanVideoImageClipEncode_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
@@ -959,7 +959,7 @@ class WanVideoImageClipEncode:
         return (image_embeds,)
 
 
-class WanVideoStartEndImageClipEncode:
+class WanVideoStartEndImageClipEncode_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
@@ -1102,7 +1102,7 @@ class WanVideoStartEndImageClipEncode:
 
 
 
-class WanVideoEmptyEmbeds:
+class WanVideoEmptyEmbeds_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
@@ -1141,7 +1141,7 @@ class WanVideoEmptyEmbeds:
 
 #region Sampler
 
-class WanVideoContextOptions:
+class WanVideoContextOptions_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
@@ -1172,7 +1172,7 @@ class WanVideoContextOptions:
 
         return (context_options,)
     
-class WanVideoFlowEdit:
+class WanVideoFlowEdit_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
@@ -1197,7 +1197,7 @@ class WanVideoFlowEdit:
     def process(self, **kwargs):
         return (kwargs,)
     
-class WanVideoSampler:
+class WanVideoSampler_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -1347,7 +1347,7 @@ class WanVideoSampler:
             context_stride = context_options["context_stride"] // 4
             context_overlap = context_options["context_overlap"] // 4
 
-            self.window_tracker = WindowTracker(verbose=context_options["verbose"])
+            self.window_tracker = WindowTracker_2frames(verbose=context_options["verbose"])
 
             # Get total number of prompts
             num_prompts = len(text_embeds["prompt_embeds"])
@@ -1821,7 +1821,7 @@ class WanVideoSampler:
             }, )
 
 
-class WanVideoStartEndSampler:
+class WanVideoStartEndSampler_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -1972,7 +1972,7 @@ class WanVideoStartEndSampler:
             context_stride = context_options["context_stride"] // 4
             context_overlap = context_options["context_overlap"] // 4
 
-            self.window_tracker = WindowTracker(verbose=context_options["verbose"])
+            self.window_tracker = WindowTracker_2frames(verbose=context_options["verbose"])
 
             # Get total number of prompts
             num_prompts = len(text_embeds["prompt_embeds"])
@@ -2460,7 +2460,7 @@ class WanVideoStartEndSampler:
         return ({
                     "samples": x0.unsqueeze(0).cpu()
                 },)
-class WindowTracker:
+class WindowTracker_2frames:
     def __init__(self, verbose=False):
         self.window_map = {}  # Maps frame sequence to persistent ID
         self.next_id = 0
@@ -2484,7 +2484,7 @@ class WindowTracker:
         return self.teacache_states[window_id]
 
 #region VideoDecode
-class WanVideoDecode:
+class WanVideoDecode_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
@@ -2527,7 +2527,7 @@ class WanVideoDecode:
 
         return (image,)
 
-class WanVideoStartEndDecode:
+class WanVideoStartEndDecode_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
@@ -2580,7 +2580,7 @@ class WanVideoStartEndDecode:
 
 
 #region VideoEncode
-class WanVideoEncode:
+class WanVideoEncode_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {"required": {
@@ -2650,7 +2650,7 @@ class WanVideoEncode:
 
         return ({"samples": latents, "mask": mask},)
 
-class WanVideoLatentPreview:
+class WanVideoLatentPreview_2frames:
     @classmethod
     def INPUT_TYPES(s):
         return {
@@ -2730,50 +2730,50 @@ class WanVideoLatentPreview:
         return (latent_images.float().cpu(), out_factors)
 
 NODE_CLASS_MAPPINGS = {
-    "WanVideoTextEncode": WanVideoTextEncode,
-    "WanVideoModelLoader": WanVideoModelLoader,
-    "WanVideoVAELoader": WanVideoVAELoader,
-    "LoadWanVideoT5TextEncoder": LoadWanVideoT5TextEncoder,
-    "WanVideoImageClipEncode": WanVideoImageClipEncode,
-    "LoadWanVideoClipTextEncoder": LoadWanVideoClipTextEncoder,
-    "WanVideoEncode": WanVideoEncode,
-    "WanVideoBlockSwap": WanVideoBlockSwap,
-    "WanVideoTorchCompileSettings": WanVideoTorchCompileSettings,
-    "WanVideoLatentPreview": WanVideoLatentPreview,
-    "WanVideoEmptyEmbeds": WanVideoEmptyEmbeds,
-    "WanVideoLoraSelect": WanVideoLoraSelect,
-    "WanVideoLoraBlockEdit": WanVideoLoraBlockEdit,
-    "WanVideoEnhanceAVideo": WanVideoEnhanceAVideo,
-    "WanVideoContextOptions": WanVideoContextOptions,
-    "WanVideoTeaCache": WanVideoTeaCache,
-    "WanVideoVRAMManagement": WanVideoVRAMManagement,
-    "WanVideoTextEmbedBridge": WanVideoTextEmbedBridge,
-    "WanVideoFlowEdit": WanVideoFlowEdit,
-    "WanVideoStartEndImageClipEncode":WanVideoStartEndImageClipEncode,
-    "WanVideoStartEndDecode": WanVideoStartEndDecode,
-    "WanVideoStartEndSampler":WanVideoStartEndSampler,
+    "WanVideoTextEncode_2frames": WanVideoTextEncode_2frames,
+    "WanVideoModelLoader_2frames": WanVideoModelLoader_2frames,
+    "WanVideoVAELoader_2frames": WanVideoVAELoader_2frames,
+    "LoadWanVideoT5TextEncoder_2frames": LoadWanVideoT5TextEncoder_2frames,
+    "WanVideoImageClipEncode_2frames": WanVideoImageClipEncode_2frames,
+    "LoadWanVideoClipTextEncoder_2frames": LoadWanVideoClipTextEncoder_2frames,
+    "WanVideoEncode_2frames": WanVideoEncode_2frames,
+    "WanVideoBlockSwap_2frames": WanVideoBlockSwap_2frames,
+    "WanVideoTorchCompileSettings_2frames": WanVideoTorchCompileSettings_2frames,
+    "WanVideoLatentPreview_2frames": WanVideoLatentPreview_2frames,
+    "WanVideoEmptyEmbeds_2frames": WanVideoEmptyEmbeds_2frames,
+    "WanVideoLoraSelect_2frames": WanVideoLoraSelect_2frames,
+    "WanVideoLoraBlockEdit_2frames": WanVideoLoraBlockEdit_2frames,
+    "WanVideoEnhanceAVideo_2frames": WanVideoEnhanceAVideo_2frames,
+    "WanVideoContextOptions_2frames": WanVideoContextOptions_2frames,
+    "WanVideoTeaCache_2frames": WanVideoTeaCache_2frames,
+    "WanVideoVRAMManagement_2frames": WanVideoVRAMManagement_2frames,
+    "WanVideoTextEmbedBridge_2frames": WanVideoTextEmbedBridge_2frames,
+    "WanVideoFlowEdit_2frames": WanVideoFlowEdit_2frames,
+    "WanVideoStartEndImageClipEncode_2frames":WanVideoStartEndImageClipEncode_2frames,
+    "WanVideoStartEndDecode_2frames": WanVideoStartEndDecode_2frames,
+    "WanVideoStartEndSampler_2frames":WanVideoStartEndSampler_2frames,
     }
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "WanVideoTextEncode": "WanVideo TextEncode(2Frames)",
-    "WanVideoModelLoader": "WanVideo Model Loader(2Frames)",
-    "WanVideoVAELoader": "WanVideo VAE Loader(2Frames)",
-    "LoadWanVideoT5TextEncoder": "Load WanVideo T5 TextEncoder(2Frames)",
-    "WanVideoImageClipEncode": "WanVideo ImageClip Encode(2Frames)",
-    "LoadWanVideoClipTextEncoder": "Load WanVideo Clip Encoder(2Frames)",
-    "WanVideoEncode": "WanVideo Encode(2Frames)",
-    "WanVideoBlockSwap": "WanVideo BlockSwap(2Frames)",
-    "WanVideoTorchCompileSettings": "WanVideo Torch Compile Settings(2Frames)",
-    "WanVideoLatentPreview": "WanVideo Latent Preview(2Frames)",
-    "WanVideoEmptyEmbeds": "WanVideo Empty Embeds(2Frames)",
-    "WanVideoLoraSelect": "WanVideo Lora Select(2Frames)",
-    "WanVideoLoraBlockEdit": "WanVideo Lora Block Edit(2Frames)",
-    "WanVideoEnhanceAVideo": "WanVideo Enhance-A-Video(2Frames)",
-    "WanVideoContextOptions": "WanVideo Context Options(2Frames)",
-    "WanVideoTeaCache": "WanVideo TeaCache(2Frames)",
-    "WanVideoVRAMManagement": "WanVideo VRAM Management(2Frames)",
-    "WanVideoTextEmbedBridge": "WanVideo TextEmbed Bridge(2Frames)",
-    "WanVideoFlowEdit": "WanVideo FlowEdit(2Frames)",
-    "WanVideoStartEndImageClipEncode":"WanVideo Start End Image Clip Encode(2Frames)",
-    "WanVideoStartEndDecode": "Wan Video Start End Decode(2Frames)",
-    "WanVideoStartEndSampler": "Wan Video Start End Sampler(2Frames)",
+    "WanVideoTextEncode_2frames": "WanVideo TextEncode(2Frames)",
+    "WanVideoModelLoader_2frames": "WanVideo Model Loader(2Frames)",
+    "WanVideoVAELoader_2frames": "WanVideo VAE Loader(2Frames)",
+    "LoadWanVideoT5TextEncoder_2frames": "Load WanVideo T5 TextEncoder(2Frames)",
+    "WanVideoImageClipEncode_2frames": "WanVideo ImageClip Encode(2Frames)",
+    "LoadWanVideoClipTextEncoder_2frames": "Load WanVideo Clip Encoder(2Frames)",
+    "WanVideoEncode_2frames": "WanVideo Encode(2Frames)",
+    "WanVideoBlockSwap_2frames": "WanVideo BlockSwap(2Frames)",
+    "WanVideoTorchCompileSettings_2frames": "WanVideo Torch Compile Settings(2Frames)",
+    "WanVideoLatentPreview_2frames": "WanVideo Latent Preview(2Frames)",
+    "WanVideoEmptyEmbeds_2frames": "WanVideo Empty Embeds(2Frames)",
+    "WanVideoLoraSelect_2frames": "WanVideo Lora Select(2Frames)",
+    "WanVideoLoraBlockEdit_2frames": "WanVideo Lora Block Edit(2Frames)",
+    "WanVideoEnhanceAVideo_2frames": "WanVideo Enhance-A-Video(2Frames)",
+    "WanVideoContextOptions_2frames": "WanVideo Context Options(2Frames)",
+    "WanVideoTeaCache_2frames": "WanVideo TeaCache(2Frames)",
+    "WanVideoVRAMManagement_2frames": "WanVideo VRAM Management(2Frames)",
+    "WanVideoTextEmbedBridge_2frames": "WanVideo TextEmbed Bridge(2Frames)",
+    "WanVideoFlowEdit_2frames": "WanVideo FlowEdit(2Frames)",
+    "WanVideoStartEndImageClipEncode_2frames":"WanVideo Start End Image Clip Encode(2Frames)",
+    "WanVideoStartEndDecode_2frames": "Wan Video Start End Decode(2Frames)",
+    "WanVideoStartEndSampler_2frames": "Wan Video Start End Sampler(2Frames)",
     }
