@@ -2,7 +2,7 @@
 ComfyUI nodes that support video generation by start and end frames
 
 # Start
-This project is a node-based implementation for video generation using the Wan2.1 model, with a focus on start and end frame guidance. The source code is a modification of Kijai's nodes code, so for model download and installation instructions, please refer to [ComfyUI-WanVideoWrapper](https://github.com/fallenshock/FlowEdit). This project specifically adds the functionality of start and end frame guided video generation.
+This project is a node-based implementation for video generation using the Wan2.1 model, with a focus on start and end frame guidance. The source code is a modification of Kijai's nodes code, so for model download and installation instructions, please refer to [ComfyUI-WanVideoWrapper](https://github.com/kijai/ComfyUI-WanVideoWrapper). This project specifically adds the functionality of start and end frame guided video generation.
 
 The nodes support Wan2.1 models in both 720P and 480P versions. It is recommended to generate videos with a frame count of 25 or higher, as a lower frame count may affect the consistency of character identity.
 
