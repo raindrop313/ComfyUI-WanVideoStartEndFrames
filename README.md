@@ -10,5 +10,22 @@ Currently, the start and end frame video generation approach is in its early sta
 
 We welcome discussions in the issues section and extend our gratitude to Kijai for the open-source nodes.
 
+# Examples
+Start Frame:
+![start_frame_](https://github.com/user-attachments/assets/6c301578-56ae-45c7-8d1c-9ac5f727bf53)
+End Frame:
+![end_frame](https://github.com/user-attachments/assets/97de3844-e974-4be9-9157-0785c564574d)
+prompt:
+两个角色搀扶着往前走，并看向彼此
+Video output:
+-720P:
+
+
+-480P:
+https://github.com/user-attachments/assets/09c224e3-ac17-4621-bfcd-a8d449b8720e
+
+
+
+
 
 
