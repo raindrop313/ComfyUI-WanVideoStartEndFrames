@@ -10,6 +10,8 @@ Currently, the start and end frame video generation approach is in its early sta
 
 I welcome discussions in the issues section and extend our gratitude to Kijai for the open-source nodes.
 
+Note: Video generation should ideally be accompanied by positive prompts. Currently, the absence of positive prompts can result in severe video distortion.
+
 # Examples
 Start Frame:
 ![start_frame_](https://github.com/user-attachments/assets/6c301578-56ae-45c7-8d1c-9ac5f727bf53)
