@@ -1046,9 +1046,9 @@ class WanVideoStartEndImageClipEncode_2frames:
         mask = torch.ones(1, num_frames+1, lat_h, lat_w, device=device)
         mask[:, 1:-1] = 0
         
-        # Apply start and end frame weights
-        mask[:, 0] *= start_frame_weight
-        mask[:, -1] *= end_frame_weight
+        # No longer applying weights to the mask - this should improve transition smoothness
+        # mask[:, 0] *= start_frame_weight
+        # mask[:, -1] *= end_frame_weight
 
         # Step 2: Repeat first frame 4 times and concatenate with remaining frames
         first_frame_repeated = torch.repeat_interleave(mask[:, 0:1], repeats=4, dim=1)
