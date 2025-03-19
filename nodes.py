@@ -984,7 +984,10 @@ class WanVideoStartEndImageClipEncode_2frames:
                                                   "tooltip": "Additional clip embed multiplier"}),
                 "adjust_resolution": ("BOOLEAN", {"default": True,
                                                   "tooltip": "Performs the same resolution adjustment as in the original code"}),
-
+                "start_frame_weight": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 10.0, "step": 0.01,
+                                                "tooltip": "Weight for the start frame. Higher values (>1.0) make the starting image more influential throughout the video, resulting in stronger adherence to the start frame's features. Lower values (<1.0) reduce its influence, allowing more creative freedom. Set to 0 to completely ignore the start frame."}),
+                "end_frame_weight": ("FLOAT", {"default": 1.0, "min": 0.0, "max": 10.0, "step": 0.01,
+                                              "tooltip": "Weight for the end frame. Higher values (>1.0) make the ending image more influential, causing the video to transition more strongly toward the end frame's characteristics. Lower values (<1.0) reduce its influence. Balancing with start_frame_weight allows control over transition speed and style."}),
             }
         }
 
@@ -993,9 +996,9 @@ class WanVideoStartEndImageClipEncode_2frames:
     FUNCTION = "process"
     CATEGORY = "WanVideoStartEndFrame"
 
-    def process(self, clip_vision, vae, start,end, num_frames, generation_width, generation_height, force_offload=True,
-                noise_aug_strength=0.0,
-                latent_strength=1.0, clip_embed_strength=1.0, adjust_resolution=True):
+    def process(self, clip_vision, vae, start, end, num_frames, generation_width, generation_height, force_offload=True,
+                noise_aug_strength=0.0, latent_strength=1.0, clip_embed_strength=1.0, adjust_resolution=True,
+                start_frame_weight=1.0, end_frame_weight=1.0):
 
         device = mm.get_torch_device()
         offload_device = mm.unet_offload_device()
@@ -1042,6 +1045,10 @@ class WanVideoStartEndImageClipEncode_2frames:
         # Step 1: Create initial mask with ones for first frame, zeros for others
         mask = torch.ones(1, num_frames+1, lat_h, lat_w, device=device)
         mask[:, 1:-1] = 0
+        
+        # Apply start and end frame weights
+        mask[:, 0] *= start_frame_weight
+        mask[:, -1] *= end_frame_weight
 
         # Step 2: Repeat first frame 4 times and concatenate with remaining frames
         first_frame_repeated = torch.repeat_interleave(mask[:, 0:1], repeats=4, dim=1)
@@ -1075,6 +1082,10 @@ class WanVideoStartEndImageClipEncode_2frames:
             resized_start_image = add_noise_to_reference_video(resized_start_image, ratio=noise_aug_strength)
             resized_end_image = add_noise_to_reference_video(resized_end_image, ratio=noise_aug_strength)
 
+        # Apply start and end frame weights to image data
+        resized_start_image = resized_start_image * start_frame_weight
+        resized_end_image = resized_end_image * end_frame_weight
+
         # Step 2: Create zero padding frames
         zero_frames = torch.zeros(3, num_frames - 1, h, w, device=device)
 
@@ -1088,7 +1099,7 @@ class WanVideoStartEndImageClipEncode_2frames:
 
         vae.model.clear_cache()
         vae.to(offload_device)
-        # clip_context单图像的编码
+        # clip_context contains the encoding of a single image
         image_embeds = {
             "image_embeds": y,
             "clip_context": clip_context,
