@@ -24,6 +24,8 @@ Video output:
 
 -720P:
 
+https://github.com/user-attachments/assets/948b70c7-172b-4754-8453-cd6f78b0338a
+
 
 -480P:
 
