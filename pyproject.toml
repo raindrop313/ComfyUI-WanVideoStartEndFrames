@@ -1,0 +1,15 @@
+[project]
+name = "ComfyUI-WanVideoStartEndFrames"
+description = "ComfyUI nodes that support video generation by start and end frames"
+version = "1.0.0"
+license = {file = "LICENSE"}
+dependencies = ["accelerate >= 1.2.1", "diffusers >= 0.32.0", "ftfy"]
+
+[project.urls]
+Repository = "https://github.com/raindrop313/ComfyUI-WanVideoStartEndFrames"
+#  Used by Comfy Registry https://comfyregistry.org
+
+[tool.comfy]
+PublisherId = "raindrop-313"
+DisplayName = "ComfyUI-WanVideoStartEndFrames"
+Icon = ""
