@@ -30,16 +30,19 @@ Frame count:81+1=82
 
 Video output:
 
-- 720P:
+- 720P (w/o SLG):
 
 https://github.com/user-attachments/assets/948b70c7-172b-4754-8453-cd6f78b0338a
 
 
-- 480P:
+- 480P (w/o SLG):
 
 https://github.com/user-attachments/assets/09c224e3-ac17-4621-bfcd-a8d449b8720e
 
-- 480P (SLG):
+- 480P (w SLG):
+
+https://github.com/user-attachments/assets/3db1b9ed-589d-4ece-805a-c2dd8b651ff6
+
 
 
 
